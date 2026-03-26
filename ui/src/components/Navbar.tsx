@@ -44,14 +44,14 @@ const Navbar: React.FC = () => {
         <div className="flex items-center shrink-0">
           <MenuIcon sx={{ color: "#5E5E5E" }} fontSize="small" />
           <p className="text-[22px] ml-[20px] font-bold text-[#202020]">
-            Avanzare
+            MEMOTECH
           </p>
         </div>
         
         {/* Right side - Welcome message */}
         <div className="flex items-center gap-x-2">
           <div className="flex items-center gap-2 p-3 rounded-full">
-            <p className="text-[14px] text-[#202020]">Welcome!</p>
+            <p className="text-[14px] text-[#202020]">Willkommen!</p>
           </div>
         </div>
       </div>

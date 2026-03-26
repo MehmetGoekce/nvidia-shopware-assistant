@@ -61,12 +61,12 @@ const getConfig = (): AppConfig => {
         fashion: "/images/splash.jpg",
       },
       categories: {
-        beauty: "BEAUTY AND WELLNESS",
-        fashion: "FASHION",
-        grocery: "GROCERY",
-        office: "OFFICE",
-        lifestyle: "LIFESTYLE",
-        lastCall: "LAST CALL!"
+        beauty: "BEAUTY & WELLNESS",
+        fashion: "MODE",
+        grocery: "ACCESSOIRES",
+        office: "SCHUHE",
+        lifestyle: "TASCHEN",
+        lastCall: "SALE"
       }
     },
     features: {

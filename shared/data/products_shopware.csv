@@ -1,0 +1,6 @@
+category,subcategory,name,description,url,price,image
+Women,,Variant product,Variant product,,19.99,http://localhost:8888/media/4b/2a/2d/1725522913/shirt_600x600.jpg?1725522913
+Men,,Main product with properties,Main product with properties,,19.99,http://localhost:8888/media/38/22/09/1725522913/hemd_600x600.jpg?1725522913
+Free time & electronics,,Main product with advanced prices,Main product with advanced prices,,950.00,http://localhost:8888/media/5c/76/e3/1725522913/waschmaschine_600x600.jpg?1725522913
+Free time & electronics,,Main product,Main product,,495.95,http://localhost:8888/media/15/4f/a5/1725522913/mobile_600x600.jpg?1725522913
+Men,,"Main product, free shipping with highlighting","Main product, free shipping with highlighting",,20.00,http://localhost:8888/media/d5/86/32/1725522913/handschuh_600x600.jpg?1725522913

@@ -172,6 +172,18 @@ services:
     networks:
       - shopping-network
 
+  # Shopware 6 (dockware) - Demo-Shop mit Produktdaten
+  shopware:
+    image: dockware/dev:6.6.0.0
+    container_name: shopware
+    ports:
+      - "8888:80"
+      - "8443:443"
+    environment:
+      - XDEBUG_ENABLED=0
+    networks:
+      - shopping-network
+
   # Nginx Proxy
   nginx:
     image: nginx:1.25.3-alpine

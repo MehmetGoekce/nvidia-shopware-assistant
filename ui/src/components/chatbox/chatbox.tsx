@@ -365,7 +365,7 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
     addMessage("assistant", "", "");
     
     await sleep(1000);
-    const introduction = "Hello! 👋 I'm your dedicated Shopping Assistant created by NVIDIA. You can ask me anything—from finding the perfect item to learning more about product care.\n\nHere are some questions you could ask me:\n\n• Do you have any summer skirts?\n• Does the [product name] require dry cleaning?\n• Do you have any shoes like this? (upload an image)\n• Great! Add it to my cart";
+    const introduction = "Hallo! 👋 Ich bin Ihr KI-Shopping-Assistent, powered by MEMOTECH und NVIDIA AI. Ich helfe Ihnen gerne bei der Produktsuche, Beratung und Bestellung.\n\nHier sind einige Fragen, die Sie mir stellen koennen:\n\n• Zeig mir Sommerkleider\n• Aus welchem Material ist das [Produkt]?\n• Habt ihr aehnliche Schuhe wie diese? (Bild hochladen)\n• Ab in den Warenkorb!";
     
     const words = introduction.split(" ");
     for (const word of words) {
@@ -406,7 +406,7 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
           {/* Header */}
           <div className="chatbox__header">
             <h4 className="chatbox__heading--header">
-              Retail Shopping Assistant
+              MEMOTECH Shopping Assistant
             </h4>
           </div>
 
