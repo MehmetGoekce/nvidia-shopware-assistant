@@ -601,19 +601,22 @@ class Retriever:
                 logging.info("CATALOG RETRIEVER | Image search - returning all similarity-based results without category filtering")
             return final_texts, final_ids, final_sims, final_names, final_images
         
-        # For text searches, if no categories provided, return empty
+        # Filter out empty/blank category strings (empty string matches everything via `"" in str`)
+        categories = [c for c in categories if c and c.strip()]
+
+        # For text searches, if no categories provided, return all results (pure similarity)
         if not categories:
             if verbose:
-                logging.info("CATALOG RETRIEVER | No categories provided for text search, returning empty.")
-            return [], [], [], [], []
+                logging.info("CATALOG RETRIEVER | No categories provided for text search, returning similarity-based results.")
+            return final_texts, final_ids, final_sims, final_names, final_images
 
         # Filter by category - check if any user category matches any product category/subcategory
         filtered = []
-        for text, id_, sim, name, img, cats in zip(final_texts, 
-                                                   final_ids, 
-                                                   final_sims, 
-                                                   final_names, 
-                                                   final_images, 
+        for text, id_, sim, name, img, cats in zip(final_texts,
+                                                   final_ids,
+                                                   final_sims,
+                                                   final_names,
+                                                   final_images,
                                                    cat_list):
             # Check if any user-provided category matches any product category/subcategory
             match_found = False

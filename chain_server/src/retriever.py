@@ -179,6 +179,8 @@ class RetrieverAgent():
     3.  **For Follow-ups, Use Context:** If the question is a follow-up, you MUST extract the full, specific product name from the "Previous conversation context".
     4.  **For New Searches, Use Query:** If the user is asking for a new type of item, you MUST extract the search term directly from the "Current question".
     5.  **Strict Separation:** Never merge or combine terms from the context with terms from the current query.
+    6.  **Language:** ALWAYS return search_entities in ENGLISH, even if the user writes in German or another language. Translate product terms. Examples: "Schuhe" → "shoes", "Kleider" → "dresses", "Taschen" → "bags", "Ohrringe" → "earrings", "Sonnenbrillen" → "sunglasses", "Rock" → "skirt", "Halskette" → "necklace", "Armband" → "bracelet".
+    7.  **Categories:** For ALL THREE category fields, choose from the provided available categories. If only one category is relevant, use the SAME category for all three fields. NEVER leave a category field empty or null.
 
     **Decision Logic:**
 
@@ -222,8 +224,25 @@ Apply the decision logic and extract retrieval inputs."""}
             # Add debug logging to see what query was sent
             logging.info(f"RetrieverAgent | _extract_retrieval_inputs() | Query sent to retrieval extractor: {user_question[:200]}...")
 
+            # Try tool_calls first, then fall back to parsing content as JSON
+            # (Maverick sometimes returns tool call format in content instead of tool_calls)
+            response_dict = None
             if extraction_response.choices[0].message.tool_calls:
                 response_dict = json.loads(extraction_response.choices[0].message.tool_calls[0].function.arguments)
+            elif extraction_response.choices[0].message.content:
+                try:
+                    content = extraction_response.choices[0].message.content.strip()
+                    parsed = self._parse_llm_json(content)
+                    # Handle nested format: {"type": "function", "parameters": {...}}
+                    if "parameters" in parsed:
+                        response_dict = parsed["parameters"]
+                    elif "search_entities" in parsed:
+                        response_dict = parsed
+                    logging.info(f"RetrieverAgent | Parsed extraction from content fallback: {response_dict}")
+                except (json.JSONDecodeError, KeyError, ValueError):
+                    logging.warning(f"RetrieverAgent | Could not parse content as JSON: {content[:200]}")
+
+            if response_dict:
                 entity_list = response_dict.get("search_entities", [])
                 if isinstance(entity_list, str):
                     logging.info(f"RetrieverAgent | _extract_retrieval_inputs()\n\t| Entity list {entity_list}")
@@ -243,6 +262,12 @@ Apply the decision logic and extract retrieval inputs."""}
                 else:
                     categories = category_list
 
+                # Filter out empty/blank categories to prevent "" matching everything
+                categories = [c for c in categories if c and c.strip()]
+                if not categories:
+                    logging.warning("RetrieverAgent | All extracted categories were empty, using all configured categories")
+                    categories = self.categories
+
                 filters = self._normalize_filters(response_dict)
 
             logging.info(
@@ -253,6 +278,24 @@ Apply the decision logic and extract retrieval inputs."""}
         else:
             logging.info("RetrieverAgent | _extract_retrieval_inputs() | No valid query.")
             return entity_list, categories, filters
+
+    @staticmethod
+    def _parse_llm_json(text: str) -> dict:
+        """Parse JSON from LLM output, handling common malformations like extra trailing braces."""
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
+        # Maverick sometimes adds extra trailing braces: }}} instead of }}
+        # Try progressively removing trailing braces
+        stripped = text.rstrip()
+        while stripped.endswith("}") and stripped.count("}") > stripped.count("{"):
+            stripped = stripped[:-1]
+            try:
+                return json.loads(stripped)
+            except json.JSONDecodeError:
+                continue
+        raise json.JSONDecodeError("Could not fix malformed JSON", text, 0)
 
     @staticmethod
     def _normalize_numeric_filter(value: Any) -> float | None:
