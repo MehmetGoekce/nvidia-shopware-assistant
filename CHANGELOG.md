@@ -1,3 +1,32 @@
+# MEMOTECH Fork 1.2.0 (09 April 2026)
+
+## Llama 4 Maverick + Planner Fix
+
+- **LLM Upgrade**: `meta/llama-3.1-70b-instruct` replaced with `meta/llama-4-maverick-17b-128e-instruct` (MoE, 400B params, 17B active per token, 1M context)
+- **Planner Fix**: Robust agent routing for verbose MoE model responses. Scans for keywords in full LLM output instead of requiring exact single-word responses
+- **Shopware Dockware Sync**: 63 products synced from Dockware demo data
+
+## Contributors
+- **@MehmetGoekce** ([Mehmet Gökçe](https://github.com/MehmetGoekce))
+
+---
+
+# MEMOTECH Fork 1.1.0 (26 March 2026)
+
+## Shopware 6 Integration + German Language Support
+
+- **Shopware 6 Integration**: Store API sync script (`scripts/sync-shopware.py`), product import, image upload
+- **German/English Bilingual**: Routing prompts, chatter prompts, and unsafe messages in both languages
+- **MEMOTECH Branding**: Custom Navbar, Footer, Chat UI
+- **Embeddable Widget**: `shopware-chat-widget.html` for Shopware storefront injection
+- **Dockware**: Shopware 6.6 Docker container in docker-compose for development
+- **Nginx Proxy**: Reverse proxy for frontend and API
+
+## Contributors
+- **@MehmetGoekce** ([Mehmet Gökçe](https://github.com/MehmetGoekce))
+
+---
+
 # Retail Shopping Assistant 1.0.0 (03 September 2025)
 
 ## 🎉 First Release

@@ -1,21 +1,32 @@
 <a id="top"></a>
-# 🛍️ NVIDIA AI Blueprint: Retail Shopping Assistant
+# 🛍️ MEMOTECH AI Shopping Assistant for Shopware 6
 
 <div align="center">
 
-![NVIDIA Logo](https://avatars.githubusercontent.com/u/178940881?s=200&v=4)
-
-**AI-powered retail shopping assistant with multi-agent architecture**
+**Multi-agent AI shopping assistant for Shopware 6, built on NVIDIA's retail blueprint**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
 [![Docker](https://img.shields.io/badge/Docker-Required-blue.svg)](https://www.docker.com/)
-[![GitHub Stars](https://img.shields.io/github/stars/NVIDIA-AI-Blueprints/retail-shopping-assistant?style=social)](https://github.com/NVIDIA-AI-Blueprints/retail-shopping-assistant/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/NVIDIA-AI-Blueprints/retail-shopping-assistant)](https://github.com/NVIDIA-AI-Blueprints/retail-shopping-assistant/issues)
-[![GitHub last commit](https://img.shields.io/github/last-commit/NVIDIA-AI-Blueprints/retail-shopping-assistant)](https://github.com/NVIDIA-AI-Blueprints/retail-shopping-assistant/commits)
-[![Contributors](https://img.shields.io/github/contributors/NVIDIA-AI-Blueprints/retail-shopping-assistant)](https://github.com/NVIDIA-AI-Blueprints/retail-shopping-assistant/graphs/contributors)
+[![LLM](https://img.shields.io/badge/LLM-Llama%204%20Maverick-green.svg)](https://build.nvidia.com/meta/llama-4-maverick-17b-128e-instruct)
+
+*Fork of [NVIDIA AI Blueprints: Retail Shopping Assistant](https://github.com/NVIDIA-AI-Blueprints/retail-shopping-assistant) with Shopware 6 integration, German/English bilingual support, and MEMOTECH branding.*
+
+**[Blog Post](https://memotech.ch/de/blog/ki-shopping-assistent-shopware-nvidia)** | **[Technical Deep-Dive (Substack)](https://mehmetgoekce.substack.com/p/i-connected-nvidias-multi-agent-shopping)**
 
 </div>
+
+## What's Different from the NVIDIA Blueprint?
+
+| Feature | NVIDIA Blueprint | MEMOTECH Fork |
+|---------|-----------------|---------------|
+| **LLM** | Llama 3.1 70B Instruct | Llama 4 Maverick (MoE, 400B params, 17B active) |
+| **Language** | English only | German/English bilingual |
+| **E-Commerce** | Static CSV catalog | Shopware 6 Store API integration |
+| **Planner** | Basic routing | Robust routing for verbose MoE models |
+| **Branding** | NVIDIA generic | MEMOTECH + NVIDIA |
+| **Widget** | Standalone UI | Embeddable Shopware storefront widget |
+| **Sync** | Manual CSV import | Automated Shopware product sync script |
 
 ## 📋 Table of Contents
 
@@ -180,7 +191,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 ### Related Projects
 - [NVIDIA Retrieval QA](https://catalog.ngc.nvidia.com/orgs/nim/teams/nvidia/containers/nv-embedqa-e5-v5): Embedding model for semantic search
 - [NV-CLIP](https://catalog.ngc.nvidia.com/orgs/nim/teams/nvidia/containers/nvclip): Visual understanding model
-- [Llama 3.1](https://catalog.ngc.nvidia.com/orgs/nim/teams/meta/containers/llama-3.1-70b-instruct): Large language model
+- [Llama 4 Maverick](https://build.nvidia.com/meta/llama-4-maverick-17b-128e-instruct): Large language model (MoE, 17B active params)
+- [Shopware 6](https://www.shopware.com/): Open-source e-commerce platform
 
 ## License
 
