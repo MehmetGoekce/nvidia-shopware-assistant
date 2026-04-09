@@ -118,30 +118,43 @@ class PlannerAgent:
     def _normalize_agent_name(self, agent_name: str) -> str:
         """
         Normalize agent names to match graph node names.
-        
+
+        Handles verbose LLM responses by scanning for known agent keywords.
+
         Args:
-            agent_name: Raw agent name from LLM
-            
+            agent_name: Raw agent name from LLM (may be a full sentence)
+
         Returns:
             Normalized agent name
         """
         # Map common variations to standard names
-        mappings = {
-            "search": "retriever",
+        keyword_mappings = {
             "cart_node": "cart",
+            "cart": "cart",
+            "search": "retriever",
+            "retriever": "retriever",
             "product_finder": "retriever",
+            "product finder": "retriever",
+            "chatter": "chatter",
             "general": "chatter",
-            "assistant": "chatter"
+            "assistant": "chatter",
         }
-        
-        normalized = mappings.get(agent_name, agent_name)
-        
-        # Ensure the normalized name is in our valid choices
-        if normalized not in self.agent_choices:
-            logger.warning(f"Invalid agent choice '{normalized}', defaulting to 'chatter'")
-            return "chatter"
-        
-        return normalized
+
+        text = agent_name.lower().strip()
+
+        # First try exact match
+        if text in keyword_mappings:
+            return keyword_mappings[text]
+
+        # Scan for keywords in verbose LLM response (check most specific first)
+        for keyword, mapped in keyword_mappings.items():
+            if keyword in text:
+                logger.info(f"Extracted agent '{mapped}' from verbose response via keyword '{keyword}'")
+                return mapped
+
+        # Ensure the name is in our valid choices
+        logger.warning(f"Invalid agent choice '{text[:80]}...', defaulting to 'chatter'")
+        return "chatter"
 
     def invoke(
         self,
