@@ -60,6 +60,8 @@ The Retail Shopping Assistant is an AI-powered blueprint that provides a compreh
 
 ![Shopping Assistant Diagram](notebook/shopping-assistant-diagram.jpg)
 
+> **Note:** The diagram above shows the original NVIDIA Blueprint with Llama 3.1 70B. This fork uses **Llama 4 Maverick** (MoE, 400B params, 17B active) via NVIDIA Cloud API.
+
 The application follows a microservices architecture with specialized agents for different tasks:
 - **Chain Server**: Main API with LangGraph orchestration
 - **Catalog Retriever**: Product search and recommendations
@@ -198,7 +200,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 GOVERNING TERMS: Use of the blueprint software and materials and NIM containers are governed by the [NVIDIA Software License Agreement](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-software-license-agreement/) and [Product-specific Terms for AI products](https://www.nvidia.com/en-us/agreements/enterprise-software/product-specific-terms-for-ai-products/);  and the use of models is governed by the [NVIDIA Community Model License](https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-community-models-license/).
  
-ADDITIONAL INFORMATION: [Llama 3.1 Community License Agreement](https://www.llama.com/llama3_1/license/) for Llama 3.1 70B Instruct NIM, Llama 3.1 NemoGuard 8B - Content Safety and Llama 3.1 NemoGuard 8B - Topic Control models, built with Llama, (ii) MIT license for NV-EmbedQA-E5-v5.
+ADDITIONAL INFORMATION: [Llama 3.1 Community License Agreement](https://www.llama.com/llama3_1/license/) for Llama 3.1 NemoGuard 8B - Content Safety and Llama 3.1 NemoGuard 8B - Topic Control models, built with Llama; [Llama 4 Community License Agreement](https://www.llama.com/llama4/license/) for Llama 4 Maverick 17B-128E Instruct; (ii) MIT license for NV-EmbedQA-E5-v5.
  
 This project will download and install additional third-party open source software projects. Review the license terms of these open source projects before use, found in [License-3rd-party.txt](/LICENSE-3rd-party.txt).
  
