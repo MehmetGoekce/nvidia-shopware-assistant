@@ -27,6 +27,14 @@ export interface AppConfig {
       lifestyle: string;
       lastCall: string;
     };
+    categoryPrompts: {
+      beauty: string;
+      fashion: string;
+      grocery: string;
+      office: string;
+      lifestyle: string;
+      lastCall: string;
+    };
   };
   features: {
     guardrails: {
@@ -67,6 +75,14 @@ const getConfig = (): AppConfig => {
         office: "SCHUHE",
         lifestyle: "TASCHEN",
         lastCall: "SALE"
+      },
+      categoryPrompts: {
+        beauty: "Zeig mir Beauty & Wellness Produkte",
+        fashion: "Zeig mir Mode",
+        grocery: "Zeig mir Accessoires",
+        office: "Zeig mir Schuhe",
+        lifestyle: "Zeig mir Taschen",
+        lastCall: "Zeig mir Sale Angebote",
       }
     },
     features: {

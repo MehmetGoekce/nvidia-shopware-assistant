@@ -21,20 +21,11 @@
 
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { config, isFashionMode } from "../config/config";
+import { config } from "../config/config";
+import { NavbarProps } from "../types";
 
-const Navbar: React.FC = () => {
-  const categories = config.ui.categories;
-
-  const getCategoryLink = (categoryKey: keyof typeof categories): string => {
-    // Remove all mode switching logic
-    return "#";
-  };
-
-  const isCategoryActive = (categoryKey: keyof typeof categories): boolean => {
-    // Only fashion is active
-    return categoryKey === 'fashion';
-  };
+const Navbar: React.FC<NavbarProps> = ({ onCategoryClick }) => {
+  const { categories, categoryPrompts } = config.ui;
 
   return (
     <div>
@@ -47,7 +38,7 @@ const Navbar: React.FC = () => {
             MEMOTECH
           </p>
         </div>
-        
+
         {/* Right side - Welcome message */}
         <div className="flex items-center gap-x-2">
           <div className="flex items-center gap-2 p-3 rounded-full">
@@ -58,67 +49,17 @@ const Navbar: React.FC = () => {
 
       {/* Categories bar */}
       <div className="bg-[#F2F2F2] mt-[1px] h-[57px] text-white px-3 py-2 lg:px-8 flex items-center gap-8">
-        {/* Beauty and Wellness */}
-        <div className="flex items-center hover:underline">
-          <p className="text-[15px] text-[#666] font-medium hover:underline">
-            {categories.beauty}
-          </p>
-        </div>
-
-        {/* Fashion - Always Active */}
-        <div className="flex items-center">
-          <p className="text-[15px] font-medium text-[#000] underline">
-            {categories.fashion}
-          </p>
-        </div>
-
-        {/* Remove Home Goods section entirely */}
-        {/* 
-<div 
-  className="flex items-center" 
-  style={{ 
-    textDecoration: isCategoryActive('homeGoods') ? 'underline' : 'none',
-    pointerEvents: isCategoryActive('homeGoods') ? 'none' : 'auto'
-  }}
->
-  <a 
-    className="text-[15px] font-medium hover:underline" 
-    style={{ 
-      color: isCategoryActive('homeGoods') ? "#000" : "#666" 
-    }}
-  >
-    {categories.homeGoods}
-  </a>
-</div>
-*/}
-
-        {/* Grocery */}
-        <div className="flex items-center hover:underline">
-          <p className="text-[15px] text-[#666] font-medium hover:underline">
-            {categories.grocery}
-          </p>
-        </div>
-
-        {/* Office */}
-        <div className="flex items-center hover:underline">
-          <p className="text-[15px] text-[#666] font-medium hover:underline">
-            {categories.office}
-          </p>
-        </div>
-
-        {/* Lifestyle */}
-        <div className="flex items-center hover:underline">
-          <p className="text-[15px] text-[#666] font-medium hover:underline">
-            {categories.lifestyle}
-          </p>
-        </div>
-
-        {/* Last Call */}
-        <div className="flex items-center hover:underline">
-          <p className="text-[15px] text-[#666] font-medium hover:underline">
-            {categories.lastCall}
-          </p>
-        </div>
+        {(Object.keys(categories) as Array<keyof typeof categories>).map((key) => (
+          <button
+            key={key}
+            onClick={() => onCategoryClick(categoryPrompts[key])}
+            className={`flex items-center text-[15px] font-medium hover:underline cursor-pointer bg-transparent border-none p-0 ${
+              key === 'fashion' ? 'text-[#000] underline' : 'text-[#666]'
+            }`}
+          >
+            {categories[key]}
+          </button>
+        ))}
       </div>
     </div>
   );

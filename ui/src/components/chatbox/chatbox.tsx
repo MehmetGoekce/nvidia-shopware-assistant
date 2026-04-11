@@ -50,7 +50,7 @@ const CustomSwitch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
+const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage, injectedMessage, onInjectedMessageConsumed }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [hasBeenOpened, setHasBeenOpened] = useState<boolean>(false);
   const [newMessage, setNewMessage] = useState<string>("");
@@ -187,8 +187,9 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
     });
   };
 
-  const handleSendMessage = async () => {
-    if (!newMessage.trim() && !image) return;
+  const handleSendMessage = async (messageOverride?: string) => {
+    const messageToSend = messageOverride || newMessage;
+    if (!messageToSend.trim() && !image) return;
 
     // Clear previous cart operation notifications for new message
     shownCartOperations.current.clear();
@@ -212,8 +213,8 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
       };
 
       // Add user message
-      if (newMessage) {
-        addMessage("user", newMessage, "");
+      if (messageToSend) {
+        addMessage("user", messageToSend, "");
       }
       if (image) {
         addMessage("user_image", previewImage, "");
@@ -226,7 +227,7 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
       // Prepare API request
       const payload = {
         user_id: userId,
-        query: newMessage,
+        query: messageToSend,
         guardrails: isGuardrailsOn,
         image: image || "",
         image_bool: !!image
@@ -399,6 +400,13 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
     }
   }, [hasBeenOpened]);
 
+  useEffect(() => {
+    if (injectedMessage && !isLoading) {
+      handleSendMessage(injectedMessage);
+      onInjectedMessageConsumed?.();
+    }
+  }, [injectedMessage]);
+
   return (
     <div>
       <div className="chatbox">
@@ -464,7 +472,7 @@ const Chatbox: React.FC<ChatboxProps> = ({ setNewRenderImage }) => {
             <div className="button-class">
               <SendIcon
                 sx={{ color: isLoading ? "lightgray" : "#76B900", cursor: isLoading ? "not-allowed" : "pointer" }}
-                onClick={isLoading ? () => {} : handleSendMessage}
+                onClick={isLoading ? undefined : () => handleSendMessage()}
                 fontSize="large"
               />
             </div>

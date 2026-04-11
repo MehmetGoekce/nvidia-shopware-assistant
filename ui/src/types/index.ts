@@ -28,6 +28,12 @@ export interface ImageRowContent extends Array<ImageContent> {}
 
 export interface ChatboxProps {
   setNewRenderImage: (value: string) => void;
+  injectedMessage?: string | null;
+  onInjectedMessageConsumed?: () => void;
+}
+
+export interface NavbarProps {
+  onCategoryClick: (message: string) => void;
 }
 
 export interface ApparelProps {

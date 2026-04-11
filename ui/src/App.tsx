@@ -16,12 +16,17 @@ import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   const [newRenderImage, setNewRenderImage] = useState<string>("");
+  const [pendingChatMessage, setPendingChatMessage] = useState<string | null>(null);
 
   return (
     <div className="bg-[#FFFFFF] flex flex-col h-screen w-screen">
-      <Navbar />
+      <Navbar onCategoryClick={setPendingChatMessage} />
       <Apparel newRenderImage={newRenderImage} />
-      <Chatbox setNewRenderImage={setNewRenderImage} />
+      <Chatbox
+        setNewRenderImage={setNewRenderImage}
+        injectedMessage={pendingChatMessage}
+        onInjectedMessageConsumed={() => setPendingChatMessage(null)}
+      />
       <Footer />
       <ToastContainer position="top-right" />
     </div>

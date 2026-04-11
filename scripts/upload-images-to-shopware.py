@@ -62,12 +62,22 @@ def api_request(token: str, method: str, endpoint: str, data=None, headers_extra
 
 
 def get_all_products(token: str) -> list[dict]:
-    """Get all products without cover images."""
-    result = api_request(token, "POST", "search/product", {
-        "limit": 100,
-        "associations": {"cover": {"associations": {"media": {}}}},
-    })
-    return result.get("data", [])
+    """Get all products with pagination."""
+    all_products = []
+    page = 1
+    while True:
+        result = api_request(token, "POST", "search/product", {
+            "limit": 100,
+            "page": page,
+            "filter": [{"type": "prefix", "field": "productNumber", "value": "NVIDIA-"}],
+            "associations": {"cover": {"associations": {"media": {}}}},
+        })
+        data = result.get("data", [])
+        all_products.extend(data)
+        if len(data) < 100:
+            break
+        page += 1
+    return all_products
 
 
 def name_to_filename(name: str) -> str:
