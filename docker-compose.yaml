@@ -192,6 +192,7 @@ services:
       - "3000:80"  # Brev will expose this port
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./shared/images:/app/images:ro
     depends_on:
       - frontend
       - chain-server
